@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -88,8 +89,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         List<SiteUser> users = usersQuery.fetch();
 
-        LongSupplier totalSupplier = () -> 2;
+        // return new PageImpl<>(users, pageable, usersQuery.fetchCount()); // 아래와 거의 동일
 
-        return PageableExecutionUtils.getPage(users, pageable, totalSupplier);
+        return PageableExecutionUtils.getPage(users, pageable, usersQuery::fetchCount);
     }
 }
