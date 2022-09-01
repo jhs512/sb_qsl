@@ -30,7 +30,17 @@ public class TestInitData {
                     .email("user2@test.com")
                     .build();
 
-            userRepository.saveAll(Arrays.asList(u1, u2));
+            SiteUser u3 = SiteUser.builder()
+                    .username("user3")
+                    .password("{noop}1234")
+                    .email("user3@test.com")
+                    .build();
+
+            SiteUser u4 = SiteUser.builder()
+                    .username("user4")
+                    .password("{noop}1234")
+                    .email("user4@test.com")
+                    .build();
 
             u1.addInterestKeywordContent("축구");
             u1.addInterestKeywordContent("농구");
@@ -39,7 +49,11 @@ public class TestInitData {
             u2.addInterestKeywordContent("마라톤");
             u2.addInterestKeywordContent("농구");
 
-            userRepository.saveAll(Arrays.asList(u1, u2));
+            userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
+
+            u4.follow(u3);
+
+            userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
         };
     }
 }
